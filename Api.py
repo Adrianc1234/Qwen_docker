@@ -19,6 +19,33 @@ class ConversationRequest(BaseModel):
     mood: str
     product: str
 
+# Define el modelo de solicitud
+class MessageRequest(BaseModel):
+    message: str
+
+@app.post("/simple_chat")
+def simple_chat(request: MessageRequest):
+    message = request.message
+
+    # Obtén el método de chat desde QwenClass
+    chat = qwen.simple_chat_engine()
+
+    # Mide el tiempo de inicio
+    start_time = time.time()
+
+    # Obtén la respuesta del modelo
+    response = chat(message)
+    
+    # Mide el tiempo de finalización
+    end_time = time.time()
+    total_time = end_time - start_time
+
+    # Retorna la respuesta y el tiempo total
+    return {
+        "response": response,
+        "total_time": total_time
+    }
+
 @app.get("/load_documents")
 def load_documents():
     qwen.load_documents('Product Sheets Pharmaceutics')

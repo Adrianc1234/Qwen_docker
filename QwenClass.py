@@ -1,4 +1,5 @@
 # QwenClass.py
+
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 import re
 from llama_index.core.node_parser import SentenceSplitter
@@ -18,9 +19,27 @@ class QwenClass:
             model="mixedbread-ai/mxbai-rerank-xsmall-v1", top_n=3
         )
         
-        self.llm = Settings.llm  # Asegúrate de que Settings.llm está configurado
-        self.embed_model = Settings.embed_model  # Asegúrate de que Settings.embed_model está configurado
+        self.llm = Settings.llm  # Asegúrate de que Settings.llm esté configurado
+        self.embed_model = Settings.embed_model  # Asegúrate de que Settings.embed_model esté configurado
 
+    def simple_chat_engine(self):
+        """
+        Configura un chat engine simple para charlar sin contexto adicional.
+        """
+        # Crea un buffer de memoria para el chat
+        chat_memory = ChatMemoryBuffer.from_defaults(token_limit=1000)
+
+        # Devuelve un método que usa el LLM para completar el texto
+        def chat(message):
+            """
+            Envía un mensaje al modelo y devuelve la respuesta.
+            """
+            # Procesa el mensaje y utiliza el LLM para obtener la respuesta
+            response = self.llm.complete(prompt=message)  # Ajusta este método según tu LLM
+            return response
+
+        # Devuelve el método de chat, el cual se puede usar directamente
+        return chat
 
     def load_documents(self, directory_path):
         reader = SimpleDirectoryReader(directory_path)
@@ -62,9 +81,8 @@ class QwenClass:
         prompt = doctor_instruction_prompt(company, mood, product)
 
         doctor_chat_engine = self.index.as_chat_engine(
-            llm= Settings.llm,
+            llm=Settings.llm,
             memory=doctor_memory,
-            # system_prompt=prompt[0][0],
             context_prompt=prompt[0],
             node_postprocessors=[self.rerank],
             chat_mode="condense_plus_context",
@@ -84,7 +102,7 @@ class QwenClass:
         prompt = salesperson_instruction_prompt(medic_type, company, product, interNum, mood, robinLang, robinName)
 
         salesperson_chat_engine = self.index.as_chat_engine(
-            llm= Settings.llm,
+            llm=Settings.llm,
             memory=salesperson_memory,
             context_prompt=prompt,
             node_postprocessors=[self.rerank],

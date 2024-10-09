@@ -48,7 +48,6 @@ class ConfigManager:
         os.environ["OLLAMA_MAX_LOADED"] = '2'
         os.environ["HUGGING_FACE_TOKEN"] = "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"
 
-        # Login a Hugging Face
         login(os.environ["HUGGING_FACE_TOKEN"])
         logging.info("Environment variables set and Hugging Face login completed.")
 
