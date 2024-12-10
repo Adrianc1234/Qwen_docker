@@ -29,7 +29,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Exponer el puerto
-EXPOSE 8000
+EXPOSE 3040
 
 # Comando para ejecutar la API a través del script de entrada
 CMD ["/entrypoint.sh"]

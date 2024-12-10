@@ -7,4 +7,4 @@ ollama serve &
 sleep 5
 
 # Iniciar la aplicación
-uvicorn Api:app --host 0.0.0.0 --port 8000
+uvicorn Api:app --host 0.0.0.0 --port 3040

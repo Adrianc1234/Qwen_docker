@@ -75,10 +75,10 @@ class ConfigManager:
     def setup_model(self):
         """Setup model and settings."""
         self.llm = Ollama(model="qwen2:1.5b", request_timeout=300.0)
-        Settings.chunk_size = 512
-        Settings.node_parser = SentenceSplitter(chunk_size=512, chunk_overlap=20)
-        Settings.num_output = 512
-        Settings.context_window = 3900
+        Settings.chunk_size = 1000
+        Settings.node_parser = SentenceSplitter(chunk_size=1000, chunk_overlap=20)
+        Settings.num_output = 1000
+        Settings.context_window = 5000
         Settings.llm = self.llm
         Settings.embed_model = HuggingFaceEmbedding(
             model_name="BAAI/bge-small-en-v1.5"

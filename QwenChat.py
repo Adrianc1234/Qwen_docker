@@ -33,7 +33,7 @@ class QwenClassChat:
         Configura un chat engine simple que use el contexto global para responder.
         """
         # Crea un buffer de memoria para el chat
-        chat_memory = ChatMemoryBuffer.from_defaults(token_limit=5000)
+        chat_memory = ChatMemoryBuffer.from_defaults(token_limit=10000)
 
         def chat(message):
             """
