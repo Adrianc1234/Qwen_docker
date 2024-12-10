@@ -14,3 +14,4 @@ services:
       HUGGING_FACE_TOKEN: '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'  # Reemplaza con tu token real
     volumes:
       - './Product Sheets Pharmaceutics:/app/Product Sheets Pharmaceutics'
+    restart: always
